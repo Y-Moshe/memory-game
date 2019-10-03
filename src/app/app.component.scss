@@ -1,0 +1,38 @@
+.big-checkbox {
+  transform: scale(1.4);
+}
+
+.text-size {
+  font-size: 18px;
+}
+
+.min-100vh {
+  min-height: 100vh;
+}
+
+.text-animate {
+  font-size: 148px;
+  animation-name: textAnimation;
+  animation-iteration-count: infinite;
+  animation-duration: 1s;
+
+  @keyframes textAnimation {
+    0% {
+      color: rgb(248, 244, 0);
+    }
+    25% {
+      color: rgb(0, 174, 255);
+      transform: rotate(30deg);
+    }
+    50% {
+      color: rgb(255, 0, 200);
+    }
+    75% {
+      color: rgb(9, 255, 0);
+      transform: rotate(-30deg);
+    }
+    100% {
+      color: rgb(255, 77, 77);
+    }
+  }
+}

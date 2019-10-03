@@ -1,0 +1,59 @@
+<div class="container-fluid mt-2">
+  <div class="jumbotron">
+    <h1 class="text-center">Memory Game</h1>
+    <div class="d-flex">
+      <img src="../favicon.ico" alt="logo" class="img-fluid m-auto">
+    </div>
+  </div>
+  <div class="d-flex align-items-center">
+    <select class="form-control w-75" [(ngModel)]="boardSize" [disabled]="isGameRunning">
+      <option value="4">4x4</option>
+      <option value="6">6x6</option>
+    </select>
+    <div class="form-check ml-3">
+      <label class="form-check-label text-success text-size">
+        <input
+          type="checkbox"
+          class="form-check-input big-checkbox"
+          [(ngModel)]="isHidden"
+          [disabled]="isGameRunning">Hide cards when matches.
+      </label>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="d-flex justify-content-around">
+    <button class="btn btn-primary w-25" (click)="start()" [disabled]="isGameRunning">START</button>
+    <button class="btn btn-danger w-25" (click)="stop()" [disabled]="!isGameRunning">STOP</button>
+  </div>
+
+  <hr />
+
+  <div class="container">
+    <h1>Board Size: {{boardSize}}x{{boardSize}}</h1>
+    <hr>
+    <p class="text-warning" *ngIf="isLoading">Please wait...</p>
+
+    <div class="d-flex justify-content-center align-items-center min-100vh" #board>
+      <p class="text-uppercase text-animate"
+        *ngIf="isGameOver"
+        @gameOver>Good Job!!</p>
+
+      <table class="table table-borderless table-sm" *ngIf="cards.length > 0">
+        <tr *ngFor="let tr of cards; let row = index">
+          <td *ngFor="let card of cards[row]" class="text-center" @rotateIn>
+            <app-card
+              [card]="card"
+              (click)="click(card)">
+            </app-card>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <footer class="bg-light">
+    <p class="text-center text-secondary p-2 rounded">Copyright <sup>&copy;</sup> 2018-{{year}}</p>
+  </footer>
+</div>

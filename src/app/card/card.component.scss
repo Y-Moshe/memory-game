@@ -1,0 +1,21 @@
+$height: 15vh; // 100vh / 6 = 16.6 stand for 6 cards 15 just for better.
+
+.max-size {
+  width: 90px;
+  max-height: $height;
+
+  @media (max-width: 768px) {
+    max-height: none;
+    width: 15vw;
+    height: 15vh;
+  }
+}
+
+.custom-card {
+  border-radius: 10px;
+  display: inline-block;
+  height: $height;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}

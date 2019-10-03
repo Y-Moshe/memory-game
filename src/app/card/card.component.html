@@ -1,0 +1,16 @@
+<div class="custom-card bg-transparent shadow-lg"
+  #element
+  [@state]="card.hasMatch ? 'matches' : card.isShown ? 'shown' : 'hidden'">
+  <div class="d-flex align-items-center h-100">
+    <img
+      [hidden]="!card.isShown"
+      [src]="card.imagePath"
+      alt="Card Image"
+      class="max-size rounded">
+    <img
+      [hidden]="card.isShown"
+      src="../../assets/images/default.jpg"
+      alt="Card Image"
+      class="max-size rounded">
+  </div>
+</div>
