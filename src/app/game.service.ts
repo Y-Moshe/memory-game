@@ -2,7 +2,6 @@ import { Card } from './models/card.model';
 
 export class GameService {
   private cards: Card[] = [
-      // id & imagePath are the required!
       new Card(1, '../assets/images/angular.png'),
       new Card(2, '../assets/images/asp.net.png'),
       new Card(3, '../assets/images/bootstrap.png'),
@@ -23,41 +22,36 @@ export class GameService {
       new Card(18, '../assets/images/vue.png')
   ];
 
-  constructor() { }
-
   /**
-   * Get a new instance of Cards depends on the board size.
+   * Get a completely new instance of Cards depends on the board size.
    * @param boardSize 4 for 4x4 or 6 for 6x6.
    */
   getCards(boardSize: number): Card[][] {
-      let tempArray: Card[] = [];
-      let arrayToReturn: Card[][] = [];
-      let jsonArray: string;
+      let temp: Card[] = [];
+      let arr2Return: Card[][] = [];
 
       if (boardSize === 4) {
-          jsonArray = JSON.stringify(this.cards.slice(0, 8));
           // will contain 16 cards with new referance/instance.
-          tempArray = (JSON.parse(jsonArray) as Card[]).concat(JSON.parse(jsonArray));
-          arrayToReturn = [
-            tempArray.slice(0, 4),
-            tempArray.slice(4, 8),
-            tempArray.slice(8, 12),
-            tempArray.slice(12, 16)
+          temp = this.clone(this.cards.slice(0, 8)).concat(this.clone(this.cards.slice(0, 8)))
+          arr2Return = [
+            temp.slice(0, 4),
+            temp.slice(4, 8),
+            temp.slice(8, 12),
+            temp.slice(12, 16)
           ];
-          return arrayToReturn;
+          return arr2Return;
       }
-      // same as boardSize === 4 just do this for all cards
-      jsonArray = JSON.stringify(this.cards);
-      tempArray = (JSON.parse(jsonArray) as Card[]).concat(JSON.parse(jsonArray));
-      arrayToReturn = [
-        tempArray.slice(0, 6),
-        tempArray.slice(6, 12),
-        tempArray.slice(12, 18),
-        tempArray.slice(18, 24),
-        tempArray.slice(24, 30),
-        tempArray.slice(30, 36)
+      // will contain all cards with new referance/instance.
+      temp = this.clone(this.cards.slice()).concat(this.clone(this.cards.slice()));
+      arr2Return = [
+        temp.slice(0, 6),
+        temp.slice(6, 12),
+        temp.slice(12, 18),
+        temp.slice(18, 24),
+        temp.slice(24, 30),
+        temp.slice(30, 36)
       ];
-      return arrayToReturn;
+      return arr2Return;
   }
 
   /**
@@ -83,5 +77,18 @@ export class GameService {
   private generateRandom(num: number): number {
     return Math.floor(Math.random() * +num); // will generate a random number which depends on type of board.
     // example: if the boardType was 4 then it will generate a random number between 0-4 (4 not included!).
+  }
+
+  /**
+  * A Function which supposed to Copy any Object type even if it contains reference type on its Keys!
+  * A Great Solution by Marco Antonio Ghiani from Medium.
+  */
+  private clone(source: Card[]): Card[] {
+    if (source == null || typeof source != 'object') return source;
+    const output = Array.isArray(source) ? [] : {};
+    for (const key of Object.keys(source)) {
+        output[key] = this.clone(source[key]);
+    }
+    return output as Card[];
   }
 }
